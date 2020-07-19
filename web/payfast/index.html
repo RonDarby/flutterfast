@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+    <meta name="description" content="FlutterFast">
+
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="flutter_app">
+    <link rel="apple-touch-icon" href="../icons/Icon-192.png">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+
+    <title>PayFast</title>
+    <script src="https://test.secureserv.co.za/eng/js/jquery-3.4.1.min.js"></script>
+
+    <script src="https://test.secureserv.co.za/onsite/engine.js"></script>
+
+    <script type="application/javascript">
+
+    $('document').ready(function () {
+
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+
+            var response = urlParams.get('post');
+
+            var body = JSON.parse(response);
+
+            window.payfast_do_onsite_payment(body, function (result) {
+                try {
+                    if(result === true){
+                        locationChanged.postMessage('/success');
+                    }else{
+                        locationChanged.postMessage('/cancelled');
+                    }
+
+                } catch (e) {
+                    console.log(e);
+                }
+            });
+
+        });
+
+
+    </script>
+</head>
+<body>
+</body>
+</html>
